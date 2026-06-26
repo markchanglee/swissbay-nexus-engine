@@ -86,12 +86,20 @@ This object should support:
 
 ## Relationships
 
-This object depends on:
+### Depends On
 
-- [[Swissbay_Nexus_Project_Context]]
-- [[Nexus_Constitution]]
-- [[Nexus_File_Standard]]
-- [[Swissbay_Business_Profile]]
+- [[Swissbay_Nexus_Project_Context|Swissbay Nexus Project Context]]
+- [[Nexus_Constitution|Nexus Constitution]]
+- [[Nexus_File_Standard|Nexus File Standard]]
+- [[Swissbay_Business_Profile|Swissbay Business Profile]]
+
+### Related Departments
+
+- None listed.
+
+### Related AI Agents
+
+- None listed.
 
 ## Workflow Usage
 
@@ -107,12 +115,13 @@ AI agents should not invent fields or statuses that conflict with this object.
 
 ## Related Documents
 
-- [[Business_Object_Standard]]
-- [[Nexus_File_Standard]]
-- [[Swissbay_Nexus_Project_Context]]
-- [[MASTER_BUILD_INDEX]]
-- [[Nexus_Constitution]]
-- [[Swissbay_Business_Profile]]
+- [[Business_Object_Standard|Business Object Standard]]
+- [[Nexus_File_Standard|Nexus File Standard]]
+- [[Swissbay_Nexus_Project_Context|Swissbay Nexus Project Context]]
+- [[MASTER_BUILD_INDEX|MASTER BUILD INDEX]]
+- [[00_Business_Objects_Index|00 Business Objects Index]]
+- [[Nexus_Constitution|Nexus Constitution]]
+- [[Swissbay_Business_Profile|Swissbay Business Profile]]
 
 ## Future Improvements
 
@@ -128,4 +137,4 @@ AI agents should not invent fields or statuses that conflict with this object.
 
 | Version | Date | Change |
 |---|---|---|
-| 0.2.0 | 2026-06-26 | Initial object created by Nexus Object Builder |
+| 0.2.0 | 2026-06-26 | Object updated by Nexus Object Builder |

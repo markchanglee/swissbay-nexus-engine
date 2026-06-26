@@ -2,20 +2,7 @@ from pathlib import Path
 from datetime import date
 from .config_loader import load_yaml
 
-OBJECT_SECTIONS = [
-    "Purpose",
-    "Business Value",
-    "Owner",
-    "Inputs",
-    "Outputs",
-    "Core Fields",
-    "Relationships",
-    "Workflow Usage",
-    "AI Support",
-    "Related Documents",
-    "Future Improvements",
-    "Version History",
-]
+BUSINESS_OBJECTS_INDEX = Path("vault/03_BUSINESS_OBJECTS/00_Business_Objects_Index.md")
 
 def _find_object(target: str, registry: dict) -> dict | None:
     business_objects = registry.get("business_objects", {}) or {}
@@ -31,8 +18,16 @@ def _yaml_list(values, indent: int = 2) -> str:
         return f"{spaces}[]"
     return "\n".join(f"{spaces}- {value}" for value in values)
 
-def _slug(value: str) -> str:
-    return value.lower().replace(" ", "_").replace("-", "_")
+def _obsidian_label(value: str) -> str:
+    return str(value).replace("_", " ")
+
+def _obsidian_link(value: str) -> str:
+    return f"[[{value}|{_obsidian_label(value)}]]"
+
+def _section_links(values) -> str:
+    if not values:
+        return "- None listed."
+    return "\n".join(f"- {_obsidian_link(value)}" for value in values)
 
 def _build_frontmatter(target: str, obj: dict) -> str:
     today = date.today().isoformat()
@@ -41,7 +36,7 @@ def _build_frontmatter(target: str, obj: dict) -> str:
     related_agents = obj.get("related_agents", []) or []
     tags = obj.get("tags", ["business-object", "nexus"])
 
-    return f'''---
+    return f"""---
 id: {obj.get("id", "-")}
 key: {target}
 name: {obj.get("name", target.replace("_", " "))}
@@ -66,30 +61,24 @@ related_ai_agents:
 tags:
 {_yaml_list(tags)}
 ---
-'''
+"""
 
-def _relationships_text(depends_on: list[str]) -> str:
-    if not depends_on:
-        return "- None listed in registry."
-    return "\n".join(f"- [[{dep}]]" for dep in depends_on)
-
-def _related_documents_text(target: str, obj: dict) -> str:
+def _related_documents_text(obj: dict) -> str:
     docs = [
-        "[[Business_Object_Standard]]",
-        "[[Nexus_File_Standard]]",
-        "[[Swissbay_Nexus_Project_Context]]",
-        "[[MASTER_BUILD_INDEX]]",
+        "Business_Object_Standard",
+        "Nexus_File_Standard",
+        "Swissbay_Nexus_Project_Context",
+        "MASTER_BUILD_INDEX",
+        "00_Business_Objects_Index",
     ]
-
     for dep in obj.get("depends_on", []) or []:
-        docs.append(f"[[{dep}]]")
+        docs.append(dep)
 
     seen = []
     for doc in docs:
         if doc not in seen:
             seen.append(doc)
-
-    return "\n".join(f"- {doc}" for doc in seen)
+    return "\n".join(f"- {_obsidian_link(doc)}" for doc in seen)
 
 def _build_object_markdown(target: str, obj: dict) -> str:
     title = obj.get("name", target.replace("_", " "))
@@ -97,10 +86,10 @@ def _build_object_markdown(target: str, obj: dict) -> str:
     version = obj.get("version", "0.1.0")
     today = date.today().isoformat()
     depends_on = obj.get("depends_on", []) or []
+    related_departments = obj.get("related_departments", []) or []
+    related_agents = obj.get("related_agents", []) or []
 
-    frontmatter = _build_frontmatter(target, obj)
-
-    body = f'''
+    body = f"""
 # {title}
 
 ## Purpose
@@ -159,9 +148,17 @@ This object should support:
 
 ## Relationships
 
-This object depends on:
+### Depends On
 
-{_relationships_text(depends_on)}
+{_section_links(depends_on)}
+
+### Related Departments
+
+{_section_links(related_departments)}
+
+### Related AI Agents
+
+{_section_links(related_agents)}
 
 ## Workflow Usage
 
@@ -177,7 +174,7 @@ AI agents should not invent fields or statuses that conflict with this object.
 
 ## Related Documents
 
-{_related_documents_text(target, obj)}
+{_related_documents_text(obj)}
 
 ## Future Improvements
 
@@ -193,11 +190,52 @@ AI agents should not invent fields or statuses that conflict with this object.
 
 | Version | Date | Change |
 |---|---|---|
-| {version} | {today} | Initial object created by Nexus Object Builder |
-'''
-    return frontmatter + "\n" + body.strip() + "\n"
+| {version} | {today} | Object updated by Nexus Object Builder |
+"""
+    return _build_frontmatter(target, obj) + "\n" + body.strip() + "\n"
 
-def run_create(target: str, registry_path="config/registry.yaml", force: bool = False) -> int:
+def _write_business_object_index(registry: dict) -> None:
+    BUSINESS_OBJECTS_INDEX.parent.mkdir(parents=True, exist_ok=True)
+    business_objects = registry.get("business_objects", {}) or {}
+
+    lines = [
+        "---",
+        "type: index",
+        "section: business_objects",
+        "status: active",
+        "---",
+        "",
+        "# Business Objects Index",
+        "",
+        "## Purpose",
+        "",
+        "This index lists the Business Objects currently registered in Nexus.",
+        "",
+        "## Registered Business Objects",
+        "",
+        "| ID | Object | Status | Owner | Output Path |",
+        "|---|---|---|---|---|",
+    ]
+
+    for key, obj in business_objects.items():
+        obj_id = obj.get("id", "-")
+        name = obj.get("name", key)
+        status = obj.get("status", "-")
+        owner = obj.get("owner", "-")
+        output_path = obj.get("output_path", "-")
+        lines.append(f"| {obj_id} | [[{key}|{name}]] | {status} | {owner} | `{output_path}` |")
+
+    lines.extend([
+        "",
+        "## Related Documents",
+        "",
+        "- [[Business_Object_Standard]]",
+        "- [[Nexus_File_Standard]]",
+        "- [[MASTER_BUILD_INDEX]]",
+    ])
+    BUSINESS_OBJECTS_INDEX.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+def run_create(target: str, registry_path="config/registry.yaml", force: bool = False, update_index: bool = True) -> int:
     print("NEXUS OBJECT BUILDER")
     print("====================")
     print()
@@ -230,13 +268,20 @@ def run_create(target: str, registry_path="config/registry.yaml", force: bool = 
         print()
         print(f"[SKIP] File already exists: {path}")
         print("Object Builder will not overwrite existing files unless --force is used.")
+        if update_index:
+            _write_business_object_index(registry)
+            print(f"[OK] Updated index: {BUSINESS_OBJECTS_INDEX}")
         return 0
 
-    markdown = _build_object_markdown(target, obj)
-    path.write_text(markdown, encoding="utf-8")
+    path.write_text(_build_object_markdown(target, obj), encoding="utf-8")
 
     print()
     print(f"[OK] Created object file: {path}")
     if force:
         print("[INFO] Existing file was overwritten because --force was used.")
+
+    if update_index:
+        _write_business_object_index(registry)
+        print(f"[OK] Updated index: {BUSINESS_OBJECTS_INDEX}")
+
     return 0
