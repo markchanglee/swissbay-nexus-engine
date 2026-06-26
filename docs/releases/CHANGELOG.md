@@ -6,6 +6,10 @@
 
 Added `create` command for creating Business Object markdown files from registry metadata.
 
+### NX-006.2 — Smart Metadata
+
+Improved object builder frontmatter and added `--force` overwrite option.
+
 ## v0.1.2
 
 ### NX-001 — Doctor Command
