@@ -23,6 +23,7 @@ def main():
     create.add_argument("target", help="Business object key from config/registry.yaml")
     create.add_argument("--force", action="store_true", help="Overwrite existing object file")
     create.add_argument("--no-index", action="store_true", help="Do not update the Business Objects index")
+    create.add_argument("--ai", action="store_true", help="Use AI to generate richer object content")
 
     review = sub.add_parser("review", help="Review a draft against Nexus standards")
     review.add_argument("target", help="Target name to review")
@@ -42,28 +43,20 @@ def main():
         registry = load_yaml("config/context_registry.yaml")
         output = build_target(args.target, config, registry)
         print(f"Draft created: {output}")
-
     elif args.command == "create":
-        raise SystemExit(run_create(args.target, force=args.force, update_index=not args.no_index))
-
+        raise SystemExit(run_create(args.target, force=args.force, update_index=not args.no_index, use_ai=args.ai))
     elif args.command == "review":
         raise SystemExit(run_review(args.target))
-
     elif args.command == "status":
         print_status()
-
     elif args.command == "doctor":
         raise SystemExit(run_doctor())
-
     elif args.command == "registry":
         raise SystemExit(run_registry())
-
     elif args.command == "roadmap":
         raise SystemExit(run_roadmap())
-
     elif args.command == "validate":
         raise SystemExit(run_validate(scan_paths=args.paths))
-
     else:
         parser.print_help()
 
