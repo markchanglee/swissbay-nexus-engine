@@ -14,6 +14,10 @@ Added registry display command.
 
 Added roadmap progress command.
 
+### NX-004 — Validate Command
+
+Added Markdown validation command.
+
 ## v0.1.1
 
 Moved configuration files into `config/` and added first `registry.yaml`.
