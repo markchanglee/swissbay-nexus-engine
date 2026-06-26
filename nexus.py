@@ -22,17 +22,13 @@ def main():
     create = sub.add_parser("create", help="Create a Nexus object file from registry metadata")
     create.add_argument("target", help="Business object key from config/registry.yaml")
     create.add_argument("--force", action="store_true", help="Overwrite existing object file")
+    create.add_argument("--no-index", action="store_true", help="Do not update the Business Objects index")
 
     review = sub.add_parser("review", help="Review a draft against Nexus standards")
     review.add_argument("target", help="Target name to review")
 
     validate = sub.add_parser("validate", help="Validate Markdown files against Nexus standards")
-    validate.add_argument(
-        "--path",
-        action="append",
-        dest="paths",
-        help="Optional path to scan. Can be used more than once."
-    )
+    validate.add_argument("--path", action="append", dest="paths", help="Optional path to scan. Can be used more than once.")
 
     sub.add_parser("status", help="Show basic Nexus Engine status")
     sub.add_parser("doctor", help="Run a local health check")
@@ -48,7 +44,7 @@ def main():
         print(f"Draft created: {output}")
 
     elif args.command == "create":
-        raise SystemExit(run_create(args.target, force=args.force))
+        raise SystemExit(run_create(args.target, force=args.force, update_index=not args.no_index))
 
     elif args.command == "review":
         raise SystemExit(run_review(args.target))
