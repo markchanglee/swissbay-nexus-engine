@@ -4,6 +4,7 @@ from python.engine.config_loader import load_yaml
 from python.engine.build_manager import build_target
 from python.engine.status_report import print_status
 from python.engine.doctor import run_doctor
+from python.engine.registry import run_registry
 
 def main():
     load_dotenv()
@@ -16,6 +17,7 @@ def main():
 
     sub.add_parser("status", help="Show basic Nexus Engine status")
     sub.add_parser("doctor", help="Run a local health check")
+    sub.add_parser("registry", help="Show the Nexus registry")
 
     args = parser.parse_args()
 
@@ -30,6 +32,9 @@ def main():
 
     elif args.command == "doctor":
         raise SystemExit(run_doctor())
+
+    elif args.command == "registry":
+        raise SystemExit(run_registry())
 
     else:
         parser.print_help()
