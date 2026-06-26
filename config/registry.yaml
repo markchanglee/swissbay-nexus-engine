@@ -1,0 +1,19 @@
+
+project:
+  name: Swissbay Nexus
+  version: 0.1.1
+
+business_objects:
+  Customer_Object:
+    id: OBJ-001
+    status: planned
+    version: 0.2.0
+    type: business_object
+    output_path: vault/03_BUSINESS_OBJECTS/01_Customer_Object.md
+    draft_path: outputs/Customer_Object_DRAFT.md
+    depends_on:
+      - Swissbay_Nexus_Project_Context
+      - Nexus_Constitution
+      - Nexus_File_Standard
+      - Swissbay_Business_Profile
+    owner: CRM Intelligence

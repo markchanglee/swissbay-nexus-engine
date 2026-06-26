@@ -1,0 +1,8 @@
+.env
+keys/
+__pycache__/
+*.pyc
+.venv/
+outputs/private/
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json

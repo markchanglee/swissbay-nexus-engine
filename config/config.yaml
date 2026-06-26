@@ -1,0 +1,28 @@
+project:
+  name: Swissbay Nexus
+  version: 0.1.0
+  owner: Mark Lee
+  default_status: draft
+
+paths:
+  vault: ./vault
+  context: ./vault/00_CONTEXT
+  inbox: ./vault/00_INBOX
+  outputs: ./outputs
+  prompts: ./prompts
+
+ai:
+  provider: openai
+  default_model: gpt-5.5
+
+markdown_standard:
+  required_sections:
+    - Purpose
+    - Business Value
+    - Owner
+    - Inputs
+    - Outputs
+    - Workflow
+    - AI Support
+    - Related Documents
+    - Version History

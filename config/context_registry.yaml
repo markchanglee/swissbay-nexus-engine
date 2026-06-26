@@ -1,0 +1,31 @@
+# Context Registry
+# This tells the engine what context to load for each build target.
+
+global:
+  required:
+    - vault/00_CONTEXT/Swissbay_Nexus_Project_Context.md
+    - vault/00_CONTEXT/Nexus_Constitution.md
+    - vault/00_CONTEXT/Nexus_File_Standard.md
+    - MASTER_BUILD_INDEX.md
+
+targets:
+  Customer_Object:
+    output_file: Customer_Object_DRAFT.md
+    prompt_file: prompts/customer_object_prompt.md
+    context:
+      required:
+        - vault/00_CONTEXT/Swissbay_Business_Profile.md
+        - vault/03_BUSINESS_OBJECTS/Business_Object_Standard.md
+      optional:
+        - vault/00_INBOX
+    required_sections:
+      - Purpose
+      - Business Value
+      - Owner
+      - Inputs
+      - Outputs
+      - Data Fields
+      - Workflow Usage
+      - AI Support
+      - Related Documents
+      - Version History

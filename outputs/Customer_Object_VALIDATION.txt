@@ -1,0 +1,11 @@
+Missing required sections:
+Purpose
+Business Value
+Owner
+Inputs
+Outputs
+Data Fields
+Workflow Usage
+AI Support
+Related Documents
+Version History
