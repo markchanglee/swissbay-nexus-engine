@@ -1,6 +1,12 @@
 # Nexus Engine Changelog
 
-## v0.1.2 — In Progress
+## v0.2.0 — In Progress
+
+### NX-006.1 — Object Builder Core
+
+Added `create` command for creating Business Object markdown files from registry metadata.
+
+## v0.1.2
 
 ### NX-001 — Doctor Command
 
