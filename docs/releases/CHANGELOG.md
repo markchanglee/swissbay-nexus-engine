@@ -18,6 +18,10 @@ Added roadmap progress command.
 
 Added Markdown validation command.
 
+### NX-005 — Review Command
+
+Added draft review report command.
+
 ## v0.1.1
 
 Moved configuration files into `config/` and added first `registry.yaml`.

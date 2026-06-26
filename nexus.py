@@ -7,6 +7,7 @@ from python.engine.doctor import run_doctor
 from python.engine.registry import run_registry
 from python.engine.roadmap import run_roadmap
 from python.engine.validate_command import run_validate
+from python.engine.review import run_review
 
 def main():
     load_dotenv()
@@ -16,6 +17,9 @@ def main():
 
     build = sub.add_parser("build", help="Build a draft from a registered target")
     build.add_argument("target", help="Target name from context_registry.yaml")
+
+    review = sub.add_parser("review", help="Review a draft against Nexus standards")
+    review.add_argument("target", help="Target name to review")
 
     validate = sub.add_parser("validate", help="Validate Markdown files against Nexus standards")
     validate.add_argument(
@@ -37,6 +41,9 @@ def main():
         registry = load_yaml("config/context_registry.yaml")
         output = build_target(args.target, config, registry)
         print(f"Draft created: {output}")
+
+    elif args.command == "review":
+        raise SystemExit(run_review(args.target))
 
     elif args.command == "status":
         print_status()
