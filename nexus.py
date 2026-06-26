@@ -8,6 +8,7 @@ from python.engine.registry import run_registry
 from python.engine.roadmap import run_roadmap
 from python.engine.validate_command import run_validate
 from python.engine.review import run_review
+from python.engine.object_builder import run_create
 
 def main():
     load_dotenv()
@@ -17,6 +18,9 @@ def main():
 
     build = sub.add_parser("build", help="Build a draft from a registered target")
     build.add_argument("target", help="Target name from context_registry.yaml")
+
+    create = sub.add_parser("create", help="Create a Nexus object file from registry metadata")
+    create.add_argument("target", help="Business object key from config/registry.yaml")
 
     review = sub.add_parser("review", help="Review a draft against Nexus standards")
     review.add_argument("target", help="Target name to review")
@@ -41,6 +45,9 @@ def main():
         registry = load_yaml("config/context_registry.yaml")
         output = build_target(args.target, config, registry)
         print(f"Draft created: {output}")
+
+    elif args.command == "create":
+        raise SystemExit(run_create(args.target))
 
     elif args.command == "review":
         raise SystemExit(run_review(args.target))
