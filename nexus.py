@@ -21,6 +21,7 @@ def main():
 
     create = sub.add_parser("create", help="Create a Nexus object file from registry metadata")
     create.add_argument("target", help="Business object key from config/registry.yaml")
+    create.add_argument("--force", action="store_true", help="Overwrite existing object file")
 
     review = sub.add_parser("review", help="Review a draft against Nexus standards")
     review.add_argument("target", help="Target name to review")
@@ -47,7 +48,7 @@ def main():
         print(f"Draft created: {output}")
 
     elif args.command == "create":
-        raise SystemExit(run_create(args.target))
+        raise SystemExit(run_create(args.target, force=args.force))
 
     elif args.command == "review":
         raise SystemExit(run_review(args.target))

@@ -2,6 +2,21 @@ from pathlib import Path
 from datetime import date
 from .config_loader import load_yaml
 
+OBJECT_SECTIONS = [
+    "Purpose",
+    "Business Value",
+    "Owner",
+    "Inputs",
+    "Outputs",
+    "Core Fields",
+    "Relationships",
+    "Workflow Usage",
+    "AI Support",
+    "Related Documents",
+    "Future Improvements",
+    "Version History",
+]
+
 def _find_object(target: str, registry: dict) -> dict | None:
     business_objects = registry.get("business_objects", {}) or {}
     if target in business_objects:
@@ -10,46 +25,93 @@ def _find_object(target: str, registry: dict) -> dict | None:
         return obj
     return None
 
-def _as_yaml_list(values) -> str:
+def _yaml_list(values, indent: int = 2) -> str:
+    spaces = " " * indent
     if not values:
-        return "[]"
-    lines = []
-    for value in values:
-        lines.append(f"  - {value}")
-    return "\n".join(lines)
+        return f"{spaces}[]"
+    return "\n".join(f"{spaces}- {value}" for value in values)
+
+def _slug(value: str) -> str:
+    return value.lower().replace(" ", "_").replace("-", "_")
+
+def _build_frontmatter(target: str, obj: dict) -> str:
+    today = date.today().isoformat()
+    depends_on = obj.get("depends_on", []) or []
+    related_departments = obj.get("related_departments", []) or []
+    related_agents = obj.get("related_agents", []) or []
+    tags = obj.get("tags", ["business-object", "nexus"])
+
+    return f'''---
+id: {obj.get("id", "-")}
+key: {target}
+name: {obj.get("name", target.replace("_", " "))}
+type: {obj.get("type", "business_object")}
+object_type: business_object
+status: {obj.get("status", "draft")}
+lifecycle_stage: draft
+version: {obj.get("version", "0.1.0")}
+owner: {obj.get("owner", "-")}
+source_registry: config/registry.yaml
+output_path: {obj.get("output_path", "-")}
+created: {today}
+last_updated: {today}
+review_status: not_reviewed
+approval_status: pending
+depends_on:
+{_yaml_list(depends_on)}
+related_departments:
+{_yaml_list(related_departments)}
+related_ai_agents:
+{_yaml_list(related_agents)}
+tags:
+{_yaml_list(tags)}
+---
+'''
+
+def _relationships_text(depends_on: list[str]) -> str:
+    if not depends_on:
+        return "- None listed in registry."
+    return "\n".join(f"- [[{dep}]]" for dep in depends_on)
+
+def _related_documents_text(target: str, obj: dict) -> str:
+    docs = [
+        "[[Business_Object_Standard]]",
+        "[[Nexus_File_Standard]]",
+        "[[Swissbay_Nexus_Project_Context]]",
+        "[[MASTER_BUILD_INDEX]]",
+    ]
+
+    for dep in obj.get("depends_on", []) or []:
+        docs.append(f"[[{dep}]]")
+
+    seen = []
+    for doc in docs:
+        if doc not in seen:
+            seen.append(doc)
+
+    return "\n".join(f"- {doc}" for doc in seen)
 
 def _build_object_markdown(target: str, obj: dict) -> str:
     title = obj.get("name", target.replace("_", " "))
-    object_id = obj.get("id", "-")
     owner = obj.get("owner", "-")
-    status = obj.get("status", "draft")
     version = obj.get("version", "0.1.0")
-    depends_on = obj.get("depends_on", []) or []
     today = date.today().isoformat()
+    depends_on = obj.get("depends_on", []) or []
 
-    return f'''---
-id: {object_id}
-type: business_object
-name: {title}
-key: {target}
-status: {status}
-version: {version}
-owner: {owner}
-depends_on:
-{_as_yaml_list(depends_on)}
-created: {today}
-last_updated: {today}
----
+    frontmatter = _build_frontmatter(target, obj)
 
+    body = f'''
 # {title}
 
 ## Purpose
 
 Define the `{title}` business object inside Swissbay Nexus.
 
+This file exists so every Swissbay department uses the same definition when referring to `{title}`.
+
 ## Business Value
 
-This object creates a shared definition so Sales, Procurement, Finance, Marketing, Customer Success, AI Agents, and Dashboards all refer to the same concept.
+A consistent `{title}` object helps Swissbay reduce confusion, improve reporting, support AI agents, and prevent duplicated definitions across departments.
 
 ## Owner
 
@@ -57,51 +119,75 @@ This object creates a shared definition so Sales, Procurement, Finance, Marketin
 
 ## Inputs
 
-- To be defined.
-- Source systems may include CRM, Excel, Sage, Email, WhatsApp, Obsidian, website forms, and meeting notes.
+Potential input sources:
+
+- CRM records
+- Excel files
+- Sage records
+- Email conversations
+- WhatsApp notes
+- Website forms
+- Meeting notes
+- Knowledge Inbox entries
+- Manual updates from team members
 
 ## Outputs
 
-- To be defined.
-- This object should support workflows, reports, dashboards, AI agents, and operational decisions.
+This object should support:
+
+- Operational workflows
+- Dashboards
+- AI prompts
+- Customer or supplier records
+- Reporting
+- Decision-making
+- Department playbooks
 
 ## Core Fields
 
 | Field | Description | Required |
 |---|---|---|
-| ID | Unique object identifier | Yes |
-| Name | Human-readable name | Yes |
-| Status | Current lifecycle status | Yes |
-| Owner | Responsible department or person | Yes |
-| Notes | Operational notes | No |
+| id | Unique Nexus identifier | Yes |
+| name | Human-readable object name | Yes |
+| status | Current lifecycle status | Yes |
+| owner | Responsible role or department | Yes |
+| source_registry | Registry source file | Yes |
+| output_path | Approved vault location | Yes |
+| created | Date object file was created | Yes |
+| last_updated | Last update date | Yes |
+| notes | Operational notes | No |
 
 ## Relationships
 
-Depends on:
+This object depends on:
 
-{chr(10).join(f"- {dep}" for dep in depends_on) if depends_on else "- None"}
+{_relationships_text(depends_on)}
 
 ## Workflow Usage
 
-This object may be used by workflows that need a consistent definition of `{title}`.
+This object may be used by any workflow that needs a consistent definition of `{title}`.
+
+Future workflows should reference this object rather than creating duplicate definitions.
 
 ## AI Support
 
-AI agents should use this object as the source of truth when reasoning about `{title}`.
+AI agents should use this file as the source of truth when reasoning about `{title}`.
+
+AI agents should not invent fields or statuses that conflict with this object.
 
 ## Related Documents
 
-- [[Business_Object_Standard]]
-- [[Nexus_File_Standard]]
-- [[Swissbay_Nexus_Project_Context]]
+{_related_documents_text(target, obj)}
 
 ## Future Improvements
 
 - Add Swissbay-specific fields.
+- Add lifecycle statuses.
 - Add workflow examples.
 - Add validation rules.
 - Add dashboard usage.
 - Add AI agent usage.
+- Add real examples from Swissbay operations.
 
 ## Version History
 
@@ -109,8 +195,9 @@ AI agents should use this object as the source of truth when reasoning about `{t
 |---|---|---|
 | {version} | {today} | Initial object created by Nexus Object Builder |
 '''
+    return frontmatter + "\n" + body.strip() + "\n"
 
-def run_create(target: str, registry_path="config/registry.yaml") -> int:
+def run_create(target: str, registry_path="config/registry.yaml", force: bool = False) -> int:
     print("NEXUS OBJECT BUILDER")
     print("====================")
     print()
@@ -139,10 +226,10 @@ def run_create(target: str, registry_path="config/registry.yaml") -> int:
     path = Path(output_path)
     path.parent.mkdir(parents=True, exist_ok=True)
 
-    if path.exists():
+    if path.exists() and not force:
         print()
         print(f"[SKIP] File already exists: {path}")
-        print("Object Builder will not overwrite existing files.")
+        print("Object Builder will not overwrite existing files unless --force is used.")
         return 0
 
     markdown = _build_object_markdown(target, obj)
@@ -150,4 +237,6 @@ def run_create(target: str, registry_path="config/registry.yaml") -> int:
 
     print()
     print(f"[OK] Created object file: {path}")
+    if force:
+        print("[INFO] Existing file was overwritten because --force was used.")
     return 0
