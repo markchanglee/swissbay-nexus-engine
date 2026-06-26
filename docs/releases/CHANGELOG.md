@@ -58,3 +58,16 @@ Moved configuration files into `config/` and added first `registry.yaml`.
 
 ## v0.1.0
 Initial Nexus Engine release.
+
+### NX-006.4 — AI Assisted Object Build
+Added optional `--ai` flag for richer AI-generated object content.
+
+## v0.1.2
+Added doctor, registry, roadmap, validate, and review commands.
+
+## v0.1.1
+Moved configuration files into `config/` and added first `registry.yaml`.
+
+## v0.1.0
+Initial Nexus Engine release.
+

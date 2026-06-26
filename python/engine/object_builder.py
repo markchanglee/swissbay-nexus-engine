@@ -1,6 +1,8 @@
 from pathlib import Path
 from datetime import date
 from .config_loader import load_yaml
+from .context_loader import load_context
+from .openai_client import generate_markdown
 
 BUSINESS_OBJECTS_INDEX = Path("vault/03_BUSINESS_OBJECTS/00_Business_Objects_Index.md")
 
@@ -35,7 +37,6 @@ def _build_frontmatter(target: str, obj: dict) -> str:
     related_departments = obj.get("related_departments", []) or []
     related_agents = obj.get("related_agents", []) or []
     tags = obj.get("tags", ["business-object", "nexus"])
-
     return f"""---
 id: {obj.get("id", "-")}
 key: {target}
@@ -73,14 +74,13 @@ def _related_documents_text(obj: dict) -> str:
     ]
     for dep in obj.get("depends_on", []) or []:
         docs.append(dep)
-
     seen = []
     for doc in docs:
         if doc not in seen:
             seen.append(doc)
     return "\n".join(f"- {_obsidian_link(doc)}" for doc in seen)
 
-def _build_object_markdown(target: str, obj: dict) -> str:
+def _build_template_object_markdown(target: str, obj: dict) -> str:
     title = obj.get("name", target.replace("_", " "))
     owner = obj.get("owner", "-")
     version = obj.get("version", "0.1.0")
@@ -88,7 +88,6 @@ def _build_object_markdown(target: str, obj: dict) -> str:
     depends_on = obj.get("depends_on", []) or []
     related_departments = obj.get("related_departments", []) or []
     related_agents = obj.get("related_agents", []) or []
-
     body = f"""
 # {title}
 
@@ -194,10 +193,58 @@ AI agents should not invent fields or statuses that conflict with this object.
 """
     return _build_frontmatter(target, obj) + "\n" + body.strip() + "\n"
 
+def _build_ai_prompt(target: str, obj: dict, context: str) -> str:
+    title = obj.get("name", target.replace("_", " "))
+    frontmatter = _build_frontmatter(target, obj)
+    return f"""
+You are the Chief Architect of Swissbay Nexus.
+
+Create a production-quality Markdown file for this Business Object:
+
+Object: {title}
+Target key: {target}
+
+Registry metadata:
+{obj}
+
+Context:
+{context}
+
+Use this exact frontmatter at the top:
+{frontmatter}
+
+Requirements:
+- Make the document specific to Swissbay.
+- Swissbay is a Gauteng-based B2B operational procurement company.
+- Current categories include PPE, cleaning chemicals, toilet paper, cleaning supplies, hygiene products, and coffee cups.
+- Current customer types include schools, food manufacturers, and corporate facilities.
+- Do not write generic CRM theory.
+- Include these exact headings:
+  ## Purpose
+  ## Business Value
+  ## Owner
+  ## Inputs
+  ## Outputs
+  ## Core Fields
+  ## Relationships
+  ## Workflow Usage
+  ## AI Support
+  ## Related Documents
+  ## Future Improvements
+  ## Version History
+- Use Obsidian-style links where useful.
+- Return Markdown only.
+""".strip()
+
+def _build_ai_object_markdown(target: str, obj: dict, config: dict, context_registry: dict) -> str:
+    model = config.get("ai", {}).get("default_model", "gpt-5.5")
+    context = load_context(target, context_registry)
+    prompt = _build_ai_prompt(target, obj, context)
+    return generate_markdown(prompt, model)
+
 def _write_business_object_index(registry: dict) -> None:
     BUSINESS_OBJECTS_INDEX.parent.mkdir(parents=True, exist_ok=True)
     business_objects = registry.get("business_objects", {}) or {}
-
     lines = [
         "---",
         "type: index",
@@ -216,26 +263,22 @@ def _write_business_object_index(registry: dict) -> None:
         "| ID | Object | Status | Owner | Output Path |",
         "|---|---|---|---|---|",
     ]
-
     for key, obj in business_objects.items():
-        obj_id = obj.get("id", "-")
-        name = obj.get("name", key)
-        status = obj.get("status", "-")
-        owner = obj.get("owner", "-")
-        output_path = obj.get("output_path", "-")
-        lines.append(f"| {obj_id} | [[{key}|{name}]] | {status} | {owner} | `{output_path}` |")
-
-    lines.extend([
-        "",
-        "## Related Documents",
-        "",
-        "- [[Business_Object_Standard]]",
-        "- [[Nexus_File_Standard]]",
-        "- [[MASTER_BUILD_INDEX]]",
-    ])
+        lines.append(
+            f"| {obj.get('id','-')} | [[{key}|{obj.get('name', key)}]] | {obj.get('status','-')} | {obj.get('owner','-')} | `{obj.get('output_path','-')}` |"
+        )
+    lines.extend(["", "## Related Documents", "", "- [[Business_Object_Standard]]", "- [[Nexus_File_Standard]]", "- [[MASTER_BUILD_INDEX]]"])
     BUSINESS_OBJECTS_INDEX.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
-def run_create(target: str, registry_path="config/registry.yaml", force: bool = False, update_index: bool = True) -> int:
+def run_create(
+    target: str,
+    registry_path="config/registry.yaml",
+    force: bool = False,
+    update_index: bool = True,
+    use_ai: bool = False,
+    config_path="config/config.yaml",
+    context_registry_path="config/context_registry.yaml",
+) -> int:
     print("NEXUS OBJECT BUILDER")
     print("====================")
     print()
@@ -249,7 +292,6 @@ def run_create(target: str, registry_path="config/registry.yaml", force: bool = 
 
     registry = load_yaml(registry_file)
     obj = _find_object(target, registry)
-
     if not obj:
         print()
         print(f"[FAIL] Business object not found in registry: {target}")
@@ -273,15 +315,24 @@ def run_create(target: str, registry_path="config/registry.yaml", force: bool = 
             print(f"[OK] Updated index: {BUSINESS_OBJECTS_INDEX}")
         return 0
 
-    path.write_text(_build_object_markdown(target, obj), encoding="utf-8")
+    if use_ai:
+        print("[INFO] AI assisted build enabled.")
+        config = load_yaml(config_path)
+        context_registry = load_yaml(context_registry_path)
+        markdown = _build_ai_object_markdown(target, obj, config, context_registry)
+    else:
+        markdown = _build_template_object_markdown(target, obj)
+
+    path.write_text(markdown, encoding="utf-8")
 
     print()
     print(f"[OK] Created object file: {path}")
     if force:
         print("[INFO] Existing file was overwritten because --force was used.")
+    if use_ai:
+        print("[INFO] Content was generated using AI assistance.")
 
     if update_index:
         _write_business_object_index(registry)
         print(f"[OK] Updated index: {BUSINESS_OBJECTS_INDEX}")
-
     return 0
