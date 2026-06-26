@@ -10,6 +10,10 @@ Added environment health check command.
 
 Added registry display command.
 
+### NX-003 — Roadmap Command
+
+Added roadmap progress command.
+
 ## v0.1.1
 
 Moved configuration files into `config/` and added first `registry.yaml`.
