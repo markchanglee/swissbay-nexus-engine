@@ -1,11 +1,13 @@
-
 project:
   name: Swissbay Nexus
-  version: 0.1.1
+  version: 0.1.2
+  status: active_development
+  owner: Mark Lee
 
 business_objects:
   Customer_Object:
     id: OBJ-001
+    name: Customer Object
     status: planned
     version: 0.2.0
     type: business_object
@@ -17,3 +19,170 @@ business_objects:
       - Nexus_File_Standard
       - Swissbay_Business_Profile
     owner: CRM Intelligence
+
+  Supplier_Object:
+    id: OBJ-002
+    name: Supplier Object
+    status: planned
+    version: 0.3.0
+    type: business_object
+    output_path: vault/03_BUSINESS_OBJECTS/02_Supplier_Object.md
+    depends_on:
+      - Customer_Object
+    owner: Procurement
+
+  Product_Object:
+    id: OBJ-003
+    name: Product Object
+    status: planned
+    version: 0.3.0
+    type: business_object
+    output_path: vault/03_BUSINESS_OBJECTS/03_Product_Object.md
+    depends_on:
+      - Supplier_Object
+      - Category_Object
+    owner: Procurement
+
+  Category_Object:
+    id: OBJ-004
+    name: Category Object
+    status: planned
+    version: 0.3.0
+    type: business_object
+    output_path: vault/03_BUSINESS_OBJECTS/04_Category_Object.md
+    depends_on: []
+    owner: Procurement
+
+  Lead_Object:
+    id: OBJ-005
+    name: Lead Object
+    status: planned
+    version: 0.2.0
+    type: business_object
+    output_path: vault/03_BUSINESS_OBJECTS/05_Lead_Object.md
+    depends_on:
+      - Customer_Object
+    owner: Sales
+
+  Opportunity_Object:
+    id: OBJ-006
+    name: Opportunity Object
+    status: planned
+    version: 0.2.0
+    type: business_object
+    output_path: vault/03_BUSINESS_OBJECTS/06_Opportunity_Object.md
+    depends_on:
+      - Lead_Object
+      - Customer_Object
+    owner: Sales
+
+  Quote_Object:
+    id: OBJ-007
+    name: Quote Object
+    status: planned
+    version: 0.2.0
+    type: business_object
+    output_path: vault/03_BUSINESS_OBJECTS/07_Quote_Object.md
+    depends_on:
+      - Customer_Object
+      - Product_Object
+      - Supplier_Object
+    owner: Sales and Procurement
+
+departments:
+  Sales_OS:
+    id: DEP-001
+    name: Sales OS
+    status: planned
+    version: 0.2.0
+    owner: Sales Captain
+    depends_on:
+      - Customer_Object
+      - Lead_Object
+      - Opportunity_Object
+      - Quote_Object
+
+  Procurement_OS:
+    id: DEP-002
+    name: Procurement OS
+    status: planned
+    version: 0.3.0
+    owner: Procurement Coordinator
+    depends_on:
+      - Supplier_Object
+      - Product_Object
+      - Category_Object
+      - Quote_Object
+
+  Marketing_OS:
+    id: DEP-003
+    name: Marketing OS
+    status: planned
+    version: 0.4.0
+    owner: Marketing Lead
+    depends_on:
+      - Customer_Object
+      - Lead_Object
+
+ai_agents:
+  CEO_Advisor_Agent:
+    id: AI-001
+    name: CEO Advisor Agent
+    status: planned
+    version: 0.9.0
+    owner: Executive Office
+    depends_on:
+      - KPI_Object
+      - Decision_Object
+      - Risk_Object
+
+  Sales_Director_Agent:
+    id: AI-002
+    name: Sales Director Agent
+    status: planned
+    version: 0.9.0
+    owner: Sales
+    depends_on:
+      - Customer_Object
+      - Lead_Object
+      - Opportunity_Object
+
+  Procurement_Manager_Agent:
+    id: AI-003
+    name: Procurement Manager Agent
+    status: planned
+    version: 0.9.0
+    owner: Procurement
+    depends_on:
+      - Supplier_Object
+      - Product_Object
+      - Quote_Object
+
+workflows:
+  Lead_To_Customer:
+    id: WF-001
+    name: Lead to Customer Workflow
+    status: planned
+    version: 0.2.0
+    owner: Sales
+    depends_on:
+      - Lead_Object
+      - Customer_Object
+
+dashboards:
+  CEO_Dashboard:
+    id: DASH-001
+    name: CEO Dashboard
+    status: planned
+    version: 0.8.0
+    owner: Executive Office
+    depends_on:
+      - KPI_Object
+
+standards:
+  Nexus_File_Standard:
+    id: STD-001
+    name: Nexus File Standard
+    status: active
+    version: 0.1.0
+    owner: Nexus Engine
