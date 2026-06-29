@@ -1,0 +1,7 @@
+id: BS-000
+title: Business Specification Standard
+version: 1.0.0
+status: draft
+owner: Swissbay Architecture Board
+depends_on:
+  - NX-000

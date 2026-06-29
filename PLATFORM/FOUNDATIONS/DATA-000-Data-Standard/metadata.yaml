@@ -1,0 +1,11 @@
+id: DATA-000
+title: Data Standard
+version: 1.0.0
+status: draft
+owner: Swissbay Architecture Board
+classification: foundation_standard
+depends_on:
+  - NX-000
+  - BS-000
+review_frequency: quarterly
+ai_compatible: true
