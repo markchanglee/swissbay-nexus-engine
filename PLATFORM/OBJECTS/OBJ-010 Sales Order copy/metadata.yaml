@@ -1,0 +1,144 @@
+# ==========================================================
+# Swissbay Nexus
+# Business Object Metadata
+# ==========================================================
+
+object:
+  id: OBJ-010
+  code: SALESORDER
+  name: Sales Order
+  plural: Sales Orders
+  version: 1.0.0
+  status: Draft
+
+ownership:
+  business_owner: Sales Operations
+  technical_owner: Swissbay Architecture
+  governance_owner: Nexus Governance Board
+
+classification:
+  object_type: Transactional Business Object
+  domain: Sales
+  criticality: Critical
+  confidentiality: Internal
+  lifecycle: Active
+
+description:
+  summary: >
+    Represents every governed customer sales transaction
+    managed within Swissbay Nexus.
+
+  purpose: >
+    Establish a canonical representation of every
+    customer order from quotation through fulfilment.
+
+relationships:
+
+  parents:
+    - OBJ-001 Customer
+
+  children: []
+
+  references:
+    - OBJ-002 Supplier
+    - OBJ-003 Product
+    - OBJ-004 Employee
+    - OBJ-005 Contract
+    - OBJ-006 Project
+    - OBJ-007 Asset
+    - OBJ-008 Warehouse
+    - OBJ-009 Opportunity
+
+    - DATA-000
+    - VALID-000
+    - SEC-000
+    - AI-000
+    - AUTO-000
+
+departments:
+
+  owner:
+    - Sales Operations
+
+  contributors:
+    - Sales
+    - Finance
+    - Warehouse
+    - Customer Service
+
+  consumers:
+    - Executive
+    - AI Agents
+
+ai:
+
+  enabled: true
+
+  capabilities:
+
+    - Order Risk Analysis
+    - Delivery Prediction
+    - Revenue Forecasting
+    - Customer Insights
+    - Product Recommendation
+    - Pricing Analysis
+
+security:
+
+  classification: Internal
+
+workflow:
+
+  primary:
+
+    - Order Creation
+    - Order Approval
+    - Order Fulfilment
+    - Order Completion
+    - Order Cancellation
+
+dashboards:
+
+  - Sales Dashboard
+  - Revenue Dashboard
+  - Order Fulfilment Dashboard
+  - Executive Dashboard
+
+kpis:
+
+  - Revenue
+  - Orders Processed
+  - Fulfilment Rate
+  - Order Cycle Time
+  - Customer Satisfaction
+
+automation:
+
+  enabled: true
+
+validation:
+
+  required_fields:
+
+    - Sales Order Number
+    - Customer
+    - Order Date
+    - Order Status
+
+documentation:
+
+  readme: README.md
+
+  sections: sections/
+
+history:
+
+  created: 2026-06-30
+
+  created_by: Swissbay Architecture Team
+
+  last_updated: 2026-06-30
+
+  change_log: CHANGELOG.md
+
+  decision_log: DECISION_LOG.md

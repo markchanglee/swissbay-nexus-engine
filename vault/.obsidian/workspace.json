@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "03_BUSINESS_OBJECTS/Business_Object_Standard.md",
+                "file": "00_CONTEXT/Swissbay_Nexus_Project_Context.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Business_Object_Standard"
+              "title": "Swissbay_Nexus_Project_Context"
             }
           }
         ]
@@ -184,5 +184,12 @@
     }
   },
   "active": "25052a6dde107631",
-  "lastOpenFiles": []
+  "lastOpenFiles": [
+    "00_CONTEXT/Swissbay_Business_Profile.md",
+    "00_CONTEXT/Nexus_Constitution.md",
+    "03_BUSINESS_OBJECTS/01_Customer_Object.md",
+    "03_BUSINESS_OBJECTS/00_Business_Objects_Index.md",
+    "00_CONTEXT/Swissbay_Nexus_Project_Context.md",
+    "03_BUSINESS_OBJECTS/Business_Object_Standard.md"
+  ]
 }

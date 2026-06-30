@@ -1,0 +1,6 @@
+id: OBJ-001
+title: Customer
+version: 1.0.0
+status: draft
+inherits: OBJ-000
+owner: Sales

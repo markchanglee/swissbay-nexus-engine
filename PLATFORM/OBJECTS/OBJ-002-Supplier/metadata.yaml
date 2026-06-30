@@ -1,0 +1,240 @@
+# ==========================================================
+# Swissbay Nexus
+# Business Object Metadata
+# ==========================================================
+
+object:
+  id: OBJ-002
+  code: SUPPLIER
+  name: Supplier
+  plural: Suppliers
+  version: 1.0.0
+  status: Draft
+
+# ==========================================================
+# Ownership
+# ==========================================================
+
+ownership:
+  business_owner: Procurement
+  technical_owner: Swissbay Architecture
+  governance_owner: Nexus Governance Board
+
+# ==========================================================
+# Classification
+# ==========================================================
+
+classification:
+  object_type: Master Business Object
+  domain: Procurement
+  criticality: High
+  confidentiality: Internal
+  lifecycle: Active
+
+# ==========================================================
+# Description
+# ==========================================================
+
+description:
+  summary: >
+    Represents every organisation or individual that supplies
+    products, services or capabilities to Swissbay.
+
+  purpose: >
+    Establish a single governed definition of suppliers across
+    the Swissbay Nexus platform.
+
+# ==========================================================
+# Relationships
+# ==========================================================
+
+relationships:
+
+  parents: []
+
+  children:
+    - OBJ-003 Product
+    - OBJ-005 Contract
+    - OBJ-010 Sales Order
+
+  references:
+    - DATA-000
+    - VALID-000
+    - SEC-000
+    - AI-000
+    - AUTO-000
+
+# ==========================================================
+# Departments
+# ==========================================================
+
+departments:
+
+  owner:
+    - Procurement
+
+  contributors:
+    - Finance
+    - Operations
+    - Sales
+    - Legal
+
+  consumers:
+    - Executive
+    - AI Agents
+    - Dashboards
+
+# ==========================================================
+# AI
+# ==========================================================
+
+ai:
+
+  enabled: true
+
+  capabilities:
+
+    - Supplier Risk Analysis
+    - Supplier Performance Analysis
+    - Supplier Recommendation
+    - Spend Analysis
+    - Contract Review
+    - Duplicate Supplier Detection
+
+# ==========================================================
+# Security
+# ==========================================================
+
+security:
+
+  classification: Internal
+
+  permissions:
+
+    read:
+      - Procurement
+      - Finance
+      - Executive
+
+    create:
+      - Procurement
+
+    update:
+      - Procurement
+
+    approve:
+      - Procurement Manager
+
+    delete:
+      - System Administrator
+
+# ==========================================================
+# Workflow
+# ==========================================================
+
+workflow:
+
+  primary:
+
+    - Supplier Onboarding
+    - Supplier Approval
+    - Supplier Review
+    - Supplier Performance Assessment
+    - Supplier Offboarding
+
+# ==========================================================
+# Dashboards
+# ==========================================================
+
+dashboards:
+
+  - Procurement Dashboard
+  - Executive Dashboard
+  - Supplier Performance Dashboard
+
+# ==========================================================
+# KPIs
+# ==========================================================
+
+kpis:
+
+  - Supplier Performance Score
+  - Supplier Lead Time
+  - On-Time Delivery %
+  - Supplier Risk Rating
+  - Contract Compliance %
+
+# ==========================================================
+# Automation
+# ==========================================================
+
+automation:
+
+  enabled: true
+
+  workflows:
+
+    - Auto Supplier Validation
+    - Auto Duplicate Detection
+    - Auto Contract Reminder
+    - Auto Performance Review
+
+# ==========================================================
+# Validation
+# ==========================================================
+
+validation:
+
+  required_fields:
+
+    - Supplier Name
+    - Registration Number
+    - Tax Number
+    - Supplier Type
+    - Status
+
+# ==========================================================
+# Search
+# ==========================================================
+
+search:
+
+  keywords:
+
+    - supplier
+    - procurement
+    - vendor
+    - purchasing
+    - sourcing
+
+# ==========================================================
+# Documentation
+# ==========================================================
+
+documentation:
+
+  readme: README.md
+
+  sections: sections/
+
+  diagrams: diagrams/
+
+  templates: templates/
+
+  validation: validation/
+
+# ==========================================================
+# Version History
+# ==========================================================
+
+history:
+
+  created: 2026-06-29
+
+  created_by: Swissbay Architecture Team
+
+  last_updated: 2026-06-29
+
+  change_log: CHANGELOG.md
+
+  decision_log: DECISION_LOG.md

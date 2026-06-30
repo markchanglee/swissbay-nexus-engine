@@ -1,0 +1,10 @@
+id: OBJ-000
+title: Business Object Standard
+version: 1.0.0
+status: draft
+owner: Swissbay Architecture Board
+depends_on:
+  - NX-000
+  - BS-000
+  - DATA-000
+  - AI-000

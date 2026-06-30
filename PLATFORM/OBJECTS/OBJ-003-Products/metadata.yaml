@@ -1,0 +1,139 @@
+# ==========================================================
+# Swissbay Nexus
+# Business Object Metadata
+# ==========================================================
+
+object:
+  id: OBJ-003
+  code: PRODUCT
+  name: Product
+  plural: Products
+  version: 1.0.0
+  status: Draft
+
+ownership:
+  business_owner: Operations
+  technical_owner: Swissbay Architecture
+  governance_owner: Nexus Governance Board
+
+classification:
+  object_type: Master Business Object
+  domain: Operations
+  criticality: Critical
+  confidentiality: Internal
+  lifecycle: Active
+
+description:
+  summary: >
+    Represents every product, service, material or offering
+    managed within Swissbay Nexus.
+
+  purpose: >
+    Establish a single governed definition of every product.
+
+relationships:
+
+  parents: []
+
+  children:
+    - OBJ-007 Asset
+    - OBJ-008 Warehouse
+    - OBJ-010 Sales Order
+
+  references:
+    - OBJ-001 Customer
+    - OBJ-002 Supplier
+    - OBJ-005 Contract
+    - OBJ-006 Project
+
+    - DATA-000
+    - VALID-000
+    - SEC-000
+    - AI-000
+    - AUTO-000
+
+departments:
+
+  owner:
+    - Operations
+
+  contributors:
+    - Procurement
+    - Sales
+    - Warehouse
+    - Finance
+
+  consumers:
+    - Executive
+    - AI Agents
+
+ai:
+
+  enabled: true
+
+  capabilities:
+
+    - Product Classification
+    - Product Recommendation
+    - Inventory Optimisation
+    - Product Similarity
+    - Product Risk Analysis
+    - Demand Forecasting
+
+security:
+
+  classification: Internal
+
+workflow:
+
+  primary:
+
+    - Product Creation
+    - Product Approval
+    - Product Lifecycle
+    - Product Retirement
+
+dashboards:
+
+  - Product Dashboard
+  - Inventory Dashboard
+  - Executive Dashboard
+
+kpis:
+
+  - Active Products
+  - Inventory Value
+  - Product Margin
+  - Product Availability
+  - Product Profitability
+
+automation:
+
+  enabled: true
+
+validation:
+
+  required_fields:
+
+    - Product Code
+    - Product Name
+    - Product Category
+    - Product Status
+
+documentation:
+
+  readme: README.md
+
+  sections: sections/
+
+history:
+
+  created: 2026-06-29
+
+  created_by: Swissbay Architecture Team
+
+  last_updated: 2026-06-29
+
+  change_log: CHANGELOG.md
+
+  decision_log: DECISION_LOG.md
