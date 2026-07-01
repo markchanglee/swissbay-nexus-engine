@@ -1,0 +1,151 @@
+# ==========================================================
+# Swissbay Nexus
+# Business Object Metadata
+# ==========================================================
+
+object:
+  id: OBJ-009
+  code: OPPORTUNITY
+  name: Opportunity
+  plural: Opportunities
+  version: 1.0.0
+  status: Draft
+
+ownership:
+  business_owner: Sales
+  technical_owner: Swissbay Architecture
+  governance_owner: Nexus Governance Board
+
+classification:
+  object_type: Master Business Object
+  domain: Customer Relationship Management
+  criticality: Critical
+  confidentiality: Confidential
+  lifecycle: Active
+
+description:
+  summary: >
+    Represents every governed commercial opportunity
+    managed throughout its sales lifecycle.
+
+  purpose: >
+    Establish a canonical representation of enterprise
+    sales opportunities supporting forecasting,
+    commercial governance and revenue growth.
+
+relationships:
+
+  parents: []
+
+  children: []
+
+  references:
+    - OBJ-001 Customer
+    - OBJ-002 Supplier
+    - OBJ-003 Product
+    - OBJ-004 Employee
+    - OBJ-005 Contract
+    - OBJ-006 Project
+    - OBJ-007 Asset
+    - OBJ-008 Warehouse
+    - OBJ-010 SalesOrder
+
+    - DATA-000
+    - VALID-000
+    - SEC-000
+    - AI-000
+    - AUTO-000
+    - WF-000
+
+departments:
+
+  owner:
+    - Sales
+
+  contributors:
+    - Business Development
+    - Marketing
+    - Customer Success
+    - Finance
+    - Legal
+
+  consumers:
+    - Executive
+    - Sales Managers
+    - Account Managers
+    - AI Agents
+
+ai:
+
+  enabled: true
+
+  capabilities:
+
+    - Pipeline Forecasting
+    - Opportunity Scoring
+    - Revenue Forecasting
+    - Win Probability Prediction
+    - Next Best Action
+    - Sales Coaching
+    - Opportunity Summarisation
+
+security:
+
+  classification: Confidential
+
+workflow:
+
+  primary:
+
+    - Qualification
+    - Proposal
+    - Negotiation
+    - Contract Award
+    - Opportunity Closure
+
+dashboards:
+
+  - Sales Pipeline Dashboard
+  - Executive Revenue Dashboard
+  - Forecast Dashboard
+  - AI Opportunity Dashboard
+
+kpis:
+
+  - Pipeline Value
+  - Win Rate
+  - Average Deal Size
+  - Sales Cycle Length
+  - Forecast Accuracy
+
+automation:
+
+  enabled: true
+
+validation:
+
+  required_fields:
+
+    - Opportunity ID
+    - Opportunity Name
+    - Customer
+    - Sales Stage
+    - Opportunity Owner
+
+documentation:
+
+  readme: README.md
+
+  sections: sections/
+
+history:
+
+  created: 2026-06-30
+
+  created_by: Swissbay Architecture Team
+
+  last_updated: 2026-06-30
+
+  change_log: CHANGELOG.md
+
+  decision_log: DECISION_LOG.md

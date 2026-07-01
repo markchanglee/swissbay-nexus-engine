@@ -1,0 +1,163 @@
+# ==========================================================
+# Swissbay Nexus
+# Business Object Metadata
+# ==========================================================
+
+object:
+  id: OBJ-006
+  code: PROJECT
+  name: Project
+  plural: Projects
+  version: 1.0.0
+  status: Draft
+
+ownership:
+  business_owner: Project Management Office (PMO)
+  technical_owner: Swissbay Architecture
+  governance_owner: Nexus Governance Board
+
+classification:
+  object_type: Master Business Object
+  domain: Project & Portfolio Management
+  criticality: Critical
+  confidentiality: Internal
+  lifecycle: Active
+
+description:
+  summary: >
+    Represents every governed project executed within
+    Swissbay Nexus, providing the canonical model for
+    planning, execution, monitoring and delivery.
+
+  purpose: >
+    Establish a single enterprise representation of
+    projects that standardises governance, planning,
+    resources, budgets, schedules, risks, deliverables
+    and project outcomes.
+
+relationships:
+
+  parents:
+    - OBJ-005 Contract
+
+  children: []
+
+  references:
+    - OBJ-001 Customer
+    - OBJ-002 Supplier
+    - OBJ-003 Product
+    - OBJ-004 Employee
+    - OBJ-007 Asset
+    - OBJ-008 Warehouse
+    - OBJ-009 Opportunity
+    - OBJ-010 SalesOrder
+
+    - DATA-000
+    - VALID-000
+    - SEC-000
+    - AI-000
+    - AUTO-000
+    - WF-000
+
+departments:
+
+  owner:
+    - Project Management Office (PMO)
+
+  contributors:
+    - Operations
+    - Engineering
+    - Information Technology
+    - Procurement
+    - Finance
+    - Executive Management
+
+  consumers:
+    - Executive
+    - Project Managers
+    - Programme Managers
+    - PMO
+    - Finance
+    - Operations
+    - AI Agents
+
+ai:
+
+  enabled: true
+
+  capabilities:
+
+    - Project Health Analysis
+    - Schedule Forecasting
+    - Resource Optimisation
+    - Budget Forecasting
+    - Risk Prediction
+    - Dependency Analysis
+    - Executive Summaries
+    - Project Recommendations
+
+security:
+
+  classification: Internal
+
+workflow:
+
+  primary:
+
+    - Project Initiation
+    - Project Planning
+    - Project Execution
+    - Monitoring & Control
+    - Project Closure
+
+dashboards:
+
+  - Project Dashboard
+  - PMO Dashboard
+  - Executive Portfolio Dashboard
+  - Resource Dashboard
+  - Risk Dashboard
+
+kpis:
+
+  - Project Completion Rate
+  - Budget Variance
+  - Schedule Variance
+  - Milestone Achievement
+  - Resource Utilisation
+  - Project Health Score
+
+automation:
+
+  enabled: true
+
+validation:
+
+  required_fields:
+
+    - Project ID
+    - Project Name
+    - Project Status
+    - Project Manager
+    - Start Date
+    - Planned End Date
+    - Project Sponsor
+    - Business Owner
+
+documentation:
+
+  readme: README.md
+
+  sections: sections/
+
+history:
+
+  created: 2026-06-30
+
+  created_by: Swissbay Architecture Team
+
+  last_updated: 2026-06-30
+
+  change_log: CHANGELOG.md
+
+  decision_log: DECISION_LOG.md

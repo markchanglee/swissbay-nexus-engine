@@ -1,0 +1,155 @@
+# ==========================================================
+# Swissbay Nexus
+# Business Object Metadata
+# ==========================================================
+
+object:
+  id: OBJ-004
+  code: EMPLOYEE
+  name: Employee
+  plural: Employees
+  version: 1.0.0
+  status: Draft
+
+ownership:
+  business_owner: Human Resources
+  technical_owner: Swissbay Architecture
+  governance_owner: Nexus Governance Board
+
+classification:
+  object_type: Master Business Object
+  domain: Human Resources
+  criticality: Critical
+  confidentiality: Confidential
+  lifecycle: Active
+
+description:
+  summary: >
+    Represents every governed employee, contractor,
+    consultant or authorised worker within Swissbay Nexus.
+
+  purpose: >
+    Establish a canonical representation of every person
+    authorised to perform work, approve business processes,
+    own Business Objects and interact with enterprise systems.
+
+relationships:
+
+  parents: []
+
+  children: []
+
+  references:
+    - OBJ-001 Customer
+    - OBJ-002 Supplier
+    - OBJ-003 Product
+    - OBJ-005 Contract
+    - OBJ-006 Project
+    - OBJ-007 Asset
+    - OBJ-008 Warehouse
+    - OBJ-009 Opportunity
+    - OBJ-010 SalesOrder
+
+    - DATA-000
+    - VALID-000
+    - SEC-000
+    - AI-000
+    - AUTO-000
+    - WF-000
+
+departments:
+
+  owner:
+    - Human Resources
+
+  contributors:
+    - Information Technology
+    - Finance
+    - Operations
+    - Information Security
+    - Executive Management
+
+  consumers:
+    - Sales
+    - Finance
+    - Human Resources
+    - Operations
+    - Executive
+    - AI Agents
+
+ai:
+
+  enabled: true
+
+  capabilities:
+
+    - Workforce Analytics
+    - Skills Matching
+    - Capacity Planning
+    - Approval Recommendations
+    - Organisational Insights
+    - Training Recommendations
+    - Succession Planning
+
+security:
+
+  classification: Confidential
+
+workflow:
+
+  primary:
+
+    - Employee Onboarding
+    - Employee Update
+    - Employee Transfer
+    - Employee Leave
+    - Employee Offboarding
+
+dashboards:
+
+  - Workforce Dashboard
+  - Executive Dashboard
+  - HR Dashboard
+  - Security Dashboard
+
+kpis:
+
+  - Employee Count
+  - Active Employees
+  - Employee Turnover
+  - Training Completion
+  - Workforce Utilisation
+
+automation:
+
+  enabled: true
+
+validation:
+
+  required_fields:
+
+    - Employee ID
+    - First Name
+    - Last Name
+    - Employment Status
+    - Department
+    - Manager
+    - Job Title
+
+documentation:
+
+  readme: README.md
+
+  sections: sections/
+
+history:
+
+  created: 2026-06-30
+
+  created_by: Swissbay Architecture Team
+
+  last_updated: 2026-06-30
+
+  change_log: CHANGELOG.md
+
+  decision_log: DECISION_LOG.md

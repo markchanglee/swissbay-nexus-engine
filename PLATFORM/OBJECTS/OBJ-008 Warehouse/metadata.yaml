@@ -1,0 +1,154 @@
+# ==========================================================
+# Swissbay Nexus
+# Business Object Metadata
+# ==========================================================
+
+object:
+  id: OBJ-008
+  code: WAREHOUSE
+  name: Warehouse
+  plural: Warehouses
+  version: 1.0.0
+  status: Draft
+
+ownership:
+  business_owner: Warehouse Operations
+  technical_owner: Swissbay Architecture
+  governance_owner: Nexus Governance Board
+
+classification:
+  object_type: Master Business Object
+  domain: Supply Chain Management
+  criticality: Critical
+  confidentiality: Internal
+  lifecycle: Active
+
+description:
+  summary: >
+    Represents every governed warehouse and storage
+    facility managed within Swissbay Nexus.
+
+  purpose: >
+    Establish a canonical representation of enterprise
+    warehouses supporting inventory, assets and
+    operational logistics.
+
+relationships:
+
+  parents: []
+
+  children: []
+
+  references:
+    - OBJ-001 Customer
+    - OBJ-002 Supplier
+    - OBJ-003 Product
+    - OBJ-004 Employee
+    - OBJ-005 Contract
+    - OBJ-006 Project
+    - OBJ-007 Asset
+    - OBJ-009 Opportunity
+    - OBJ-010 SalesOrder
+
+    - DATA-000
+    - VALID-000
+    - SEC-000
+    - AI-000
+    - AUTO-000
+    - WF-000
+
+departments:
+
+  owner:
+    - Warehouse Operations
+
+  contributors:
+    - Supply Chain
+    - Logistics
+    - Procurement
+    - Operations
+    - Finance
+    - Asset Management
+
+  consumers:
+    - Executive
+    - Warehouse Managers
+    - Supply Chain
+    - Procurement
+    - Logistics
+    - AI Agents
+
+ai:
+
+  enabled: true
+
+  capabilities:
+
+    - Capacity Optimisation
+    - Inventory Forecasting
+    - Warehouse Optimisation
+    - Route Optimisation
+    - Picking Optimisation
+    - Stock Movement Analysis
+    - Demand Forecasting
+
+security:
+
+  classification: Internal
+
+workflow:
+
+  primary:
+
+    - Goods Receipt
+    - Goods Issue
+    - Warehouse Transfer
+    - Stock Adjustment
+    - Warehouse Audit
+
+dashboards:
+
+  - Warehouse Dashboard
+  - Inventory Dashboard
+  - Logistics Dashboard
+  - Executive Supply Chain Dashboard
+
+kpis:
+
+  - Inventory Accuracy
+  - Warehouse Utilisation
+  - Picking Accuracy
+  - Stock Turnover
+  - Order Fulfilment Rate
+
+automation:
+
+  enabled: true
+
+validation:
+
+  required_fields:
+
+    - Warehouse ID
+    - Warehouse Name
+    - Warehouse Type
+    - Warehouse Manager
+    - Operational Status
+
+documentation:
+
+  readme: README.md
+
+  sections: sections/
+
+history:
+
+  created: 2026-06-30
+
+  created_by: Swissbay Architecture Team
+
+  last_updated: 2026-06-30
+
+  change_log: CHANGELOG.md
+
+  decision_log: DECISION_LOG.md

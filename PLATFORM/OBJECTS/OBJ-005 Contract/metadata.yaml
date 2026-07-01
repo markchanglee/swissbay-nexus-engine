@@ -1,0 +1,216 @@
+# ==========================================================
+# Swissbay Nexus
+# Canonical Business Object Metadata
+# ==========================================================
+
+object:
+  id: OBJ-005
+  code: CONTRACT
+  name: Contract
+  plural: Contracts
+  version: 2.0.0
+  status: Draft
+  maturity: Enterprise
+
+ownership:
+  business_owner: Legal & Commercial Services
+  technical_owner: Swissbay Architecture
+  governance_owner: Nexus Governance Board
+
+classification:
+  object_type: Master Business Object
+  domain: Enterprise Contract Management
+  criticality: Critical
+  confidentiality: Confidential
+  lifecycle: Active
+
+description:
+  summary: >
+    Represents every governed legally binding agreement
+    managed throughout its complete enterprise lifecycle.
+
+  purpose: >
+    Establishes the canonical representation of commercial,
+    legal, operational and financial agreements while
+    supporting governance, automation, Artificial Intelligence
+    and enterprise execution.
+
+business_capabilities:
+
+  - Contract Lifecycle Management
+  - Commercial Governance
+  - Legal Governance
+  - Obligation Management
+  - Amendment Management
+  - Renewal Management
+  - Compliance Monitoring
+  - Executive Reporting
+  - AI Contract Intelligence
+
+supported_contracts:
+
+  commercial:
+    - Sales Contract
+    - Purchase Agreement
+    - Partnership Agreement
+    - Distribution Agreement
+
+  services:
+    - Master Service Agreement
+    - Statement of Work
+    - SLA
+    - Support Agreement
+
+  procurement:
+    - Supplier Agreement
+    - Vendor Agreement
+
+  mining:
+    - Offtake Agreement
+    - Joint Venture
+    - Processing Agreement
+
+  legal:
+    - NDA
+    - Licensing Agreement
+
+relationships:
+
+  parents: []
+
+  children:
+    - Contract Package
+    - Contract Amendment
+    - Contract Obligation
+    - Contract Milestone
+
+  references:
+    - OBJ-001 Customer
+    - OBJ-002 Supplier
+    - OBJ-003 Product
+    - OBJ-004 Employee
+    - OBJ-006 Project
+    - OBJ-007 Asset
+    - OBJ-008 Warehouse
+    - OBJ-009 Opportunity
+    - OBJ-010 SalesOrder
+
+    - DATA-000
+    - WF-000
+    - VALID-000
+    - SEC-000
+    - AUTO-000
+    - AI-000
+
+departments:
+
+  owner:
+    - Legal
+
+  contributors:
+    - Sales
+    - Procurement
+    - Finance
+    - Operations
+    - Compliance
+    - Project Management
+
+  consumers:
+    - Executive
+    - AI Agents
+    - Customer Success
+
+ai:
+
+  enabled: true
+
+  capabilities:
+
+    - Clause Classification
+    - Clause Comparison
+    - Clause Risk Detection
+    - Missing Clause Detection
+    - Renewal Prediction
+    - Obligation Extraction
+    - Executive Summaries
+    - Contract Similarity Search
+    - Compliance Monitoring
+    - Negotiation Assistance
+
+knowledge_graph:
+
+  enabled: true
+
+  semantic_node: Contract
+
+security:
+
+  classification: Confidential
+
+workflow:
+
+  primary:
+
+    - Draft
+    - Legal Review
+    - Commercial Review
+    - Negotiation
+    - Approval
+    - Signed
+    - Active
+    - Renewal
+    - Expired
+    - Archived
+
+dashboards:
+
+  - Executive Contract Dashboard
+  - Contract Portfolio Dashboard
+  - Renewal Dashboard
+  - Compliance Dashboard
+  - AI Contract Dashboard
+
+kpis:
+
+  - Active Contract Value
+  - Renewal Rate
+  - Contract Cycle Time
+  - Obligation Compliance
+  - SLA Compliance
+  - Revenue Under Contract
+  - Contract Risk Score
+
+automation:
+
+  enabled: true
+
+validation:
+
+  required_fields:
+
+    - Contract Identifier
+    - Contract Name
+    - Contract Type
+    - Primary Party
+    - Effective Date
+    - Expiry Date
+    - Contract Owner
+    - Contract Status
+
+documentation:
+
+  readme: README.md
+
+  sections: sections/
+
+history:
+
+  created: 2026-07-01
+
+  created_by: Swissbay Architecture Team
+
+  last_updated: 2026-07-01
+
+  change_log: CHANGELOG.md
+
+  decision_log: DECISION_LOG.md
