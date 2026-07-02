@@ -1,0 +1,143 @@
+ai_platform:
+  id: AI-PLATFORM-001
+  code: SWISSBAY_AI_ENTERPRISE_PLATFORM
+  name: Swissbay AI Enterprise Platform
+  version: 1.0.0
+  status: Draft
+  maturity: Enterprise Intelligence Layer
+
+ownership:
+  business_owner: Swissbay AI Governance Board
+  technical_owner: Swissbay AI Architecture
+  governance_owner: Nexus Governance Board
+
+classification:
+  type: Enterprise AI Platform
+  architecture_layer: Intelligence
+  criticality: Critical
+  confidentiality: Confidential
+
+description:
+  summary: >
+    The governed enterprise intelligence layer of Swissbay,
+    providing AI agents, copilots, reasoning, memory, RAG,
+    tools, guardrails, evaluation and observability across
+    the Enterprise Operating System.
+
+  purpose: >
+    Establish a reusable, governed and explainable AI platform
+    that operates across Business Objects, Platform Services,
+    Industry Packs and enterprise applications.
+
+dependencies:
+
+  foundation:
+    - Swissbay Constitution
+    - Governance Standards
+    - Security Standards
+
+  business_objects:
+    - Customer
+    - Supplier
+    - Product
+    - Employee
+    - Contract
+    - Project
+    - Asset
+    - Warehouse
+    - Opportunity
+    - Sales Order
+
+  platform_services:
+    - Identity Service
+    - API Gateway
+    - Workflow Engine
+    - Business Rules Engine
+    - Validation Engine
+    - Automation Engine
+    - Knowledge Graph
+    - Metadata Registry
+    - Event Bus
+    - Search Engine
+    - Reporting Engine
+    - Audit Service
+
+capabilities:
+
+  - AI Operating Model
+  - AI Runtime
+  - Agent Framework
+  - Prompt Architecture
+  - Memory Architecture
+  - Retrieval-Augmented Generation
+  - Tool Architecture
+  - Guardrails
+  - AI Governance
+  - Model Registry
+  - Evaluation Framework
+  - AI Security
+  - AI Observability
+  - Copilot Architecture
+  - Industry Agents
+
+agent_types:
+
+  - Executive Agent
+  - Legal Agent
+  - Sales Agent
+  - Finance Agent
+  - Operations Agent
+  - Compliance Agent
+  - Mining Agent
+  - Healthcare Agent
+  - Developer Agent
+
+principles:
+
+  - AI Assists
+  - AI Explains
+  - AI Obeys
+  - AI Learns
+  - Human Accountability
+  - Explainable Intelligence
+  - Secure by Design
+  - Auditable AI
+  - Model Independence
+  - Provider Independence
+
+governance:
+
+  human_oversight_required: true
+  audit_required: true
+  evaluation_required: true
+  security_required: true
+  restricted_autonomy: true
+
+ai_constraints:
+
+  may:
+    - recommend
+    - summarise
+    - classify
+    - predict
+    - assist
+    - reason
+    - retrieve information
+
+  may_not:
+    - approve contracts
+    - make legal decisions
+    - approve payments
+    - make employment decisions
+    - override business rules
+    - bypass governance
+    - execute restricted actions without approval
+
+documentation:
+  readme: README.md
+  sections: sections/
+
+history:
+  created: 2026-07-02
+  created_by: Swissbay AI Architecture Team
+  version: 1.0.0
